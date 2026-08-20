@@ -16,8 +16,10 @@ async function sendToTelegram(message) {
     body: JSON.stringify({
       chat_id: chatId,
       text: message,
-      parse_mode: 'HTML',
-      disable_web_page_preview: false
+      // Plain text: no parse_mode. Telegram auto-linkifies raw URLs on its
+      // own, so headlines don't need HTML/Markdown markup, and arbitrary
+      // RSS text can never break entity parsing.
+      disable_web_page_preview: true
     })
   });
   

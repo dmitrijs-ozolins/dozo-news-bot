@@ -21,6 +21,11 @@ function decodeEntities(str) {
     .replace(/&gt;/g, '>')
     .replace(/&quot;/g, '"')
     .replace(/&(?:#039|apos);/g, "'")
+    // A few feeds (e.g. LSM) double-encode named entities as &amp;nbsp; —
+    // after the &amp; decode above, that leaves a literal &nbsp; to catch here.
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&(?:mdash|ndash);/g, '—')
+    .replace(/&hellip;/g, '…')
     .replace(/&#(\d+);/g, (_, code) => String.fromCodePoint(parseInt(code, 10)));
 }
 
